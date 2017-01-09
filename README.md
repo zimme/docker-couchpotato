@@ -27,7 +27,7 @@ docker create \
 	-v <path to data>:/config \
 	-v <path to data>:/downloads \
 	-v <path to data>:/movies \
-	-e PGID=<gid> -e PUID=<uid>  \
+	-e PGID=<gid> -e PUID=<uid> -e PGIDS="<gid> <gid>" \
 	-e TZ=<timezone> \
 	-e UMASK_SET=<022> \
 	-p 5050:5050 \
@@ -46,8 +46,9 @@ http://192.168.x.x:8080 would show you what's running INSIDE the container on po
 * `-v /config` - Couchpotato Application Data
 * `-v /downloads` - Downloads Folder
 * `-v /movies` - Movie Share
-* `-e PGID` for for GroupID - see below for explanation
-* `-e PUID` for for UserID - see below for explanation
+* `-e PGID` for GroupID - see below for explanation
+* `-e PUID` for UserID - see below for explanation
+* `-e PGIDS` for GroupIDs - see below for explanation
 * `-e UMASK_SET` for umask setting of couchpotato, *optional* , default if left unset is 022.
 * `-e TZ` for timezone information, eg Europe/London
 
@@ -55,7 +56,7 @@ It is based on alpine-linux with S6 overlay, for shell access whilst the contain
 
 ### User / Group Identifiers
 
-Sometimes when using data volumes (`-v` flags) permissions issues can arise between the host OS and the container. We avoid this issue by allowing you to specify the user `PUID` and group `PGID`. Ensure the data volume directory on the host is owned by the same user you specify and it will "just work" ™.
+Sometimes when using data volumes (`-v` flags) permissions issues can arise between the host OS and the container. We avoid this issue by allowing you to specify the user `PUID`, group `PGID` and groups `PGIDS`. Ensure the data volume directory on the host is owned by the same user you specify and it will "just work" ™.
 
 In this instance `PUID=1001` and `PGID=1001`. To find yours use `id user` as below:
 
